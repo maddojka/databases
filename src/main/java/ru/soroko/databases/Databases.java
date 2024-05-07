@@ -6,8 +6,12 @@ public class Databases {
 
         Author author = new Author();
         author.setUniqueName("aut001");
+        Note note = new Note();
+
 
         AuthorDao authorDao = new AuthorDao();
         authorDao.createTable();
+        NotesDao notesDao = new NotesDao();
+        notesDao.create();
     }
 }
