@@ -12,4 +12,14 @@ public class Author {
     private String uniqueName;
     private LocalDate registeredAt;
     private boolean isActive = true;
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", uniqueName='" + uniqueName + '\'' +
+                ", registeredAt=" + registeredAt +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

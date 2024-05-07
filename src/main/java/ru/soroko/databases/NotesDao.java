@@ -56,7 +56,6 @@ public class NotesDao {
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                    // note.setAuthor(resultSet.getInt("author_id"));
                     return note;
                 }
             }
@@ -79,7 +78,8 @@ public class NotesDao {
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                    //  note.setAuthor(resultSet.getObject("id", Author.class));
+                    author.setId(resultSet.getInt("author_id"));
+                    note.setAuthor(author);
                     notes.add(note);
                 }
                 return notes;
@@ -89,7 +89,7 @@ public class NotesDao {
         }
     }
 
-    public List<Note> getByIdWithLimitAndOffset() {
+    public List<Note> getByIdWithLimitAndOffset(Author author) {
         String selectSql = "SELECT * " +
                 "FROM tb_notes " +
                 "LIMIT 2 OFFSET 1";
@@ -99,11 +99,13 @@ public class NotesDao {
                 List<Note> notes = new ArrayList<>();
                 while (resultSet.next()) {
                     Note note = new Note();
+                    Author newAuthor = new Author();
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                    // note.setAuthor(resultSet.getObject("author_id", Author.class));
+                    newAuthor.setId(resultSet.getInt("author_id"));
+                    note.setAuthor(newAuthor);
                     notes.add(note);
                 }
                 return notes;

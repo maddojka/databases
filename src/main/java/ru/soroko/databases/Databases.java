@@ -1,5 +1,6 @@
 package ru.soroko.databases;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Databases {
         Author author = new Author();
         author.setId(1);
         author.setUniqueName("aut001");
+        author.setRegisteredAt(LocalDate.now());
         Note note = new Note();
         note.setTitle("games");
         note.setText("info about games");
@@ -20,12 +22,12 @@ public class Databases {
         authorDao.createTable();
         NotesDao notesDao = new NotesDao();
         notesDao.create();
-        notesDao.insert(note);
+        //notesDao.insert(note);
         Note getNote = notesDao.getById(5);
         System.out.println(getNote);
         List<Note> notesByAuthorId = notesDao.getByAuthorId(author);
         System.out.println(notesByAuthorId);
-        List<Note> notes = notesDao.getByIdWithLimitAndOffset();
+        List<Note> notes = notesDao.getByIdWithLimitAndOffset(author);
         System.out.println(notes);
     }
 }
