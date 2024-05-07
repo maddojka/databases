@@ -13,4 +13,15 @@ public class Note {
     private String text;
     private OffsetDateTime createdAt;
     private Author author; // author_id
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", createdAt=" + createdAt +
+                ", author=" + author +
+                '}';
+    }
 }

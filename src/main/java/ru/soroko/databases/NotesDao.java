@@ -26,7 +26,7 @@ public class NotesDao {
         }
     }
 
-    public int insert(Note note, Author author) {
+    public int insert(Note note) {
         String insertSql = "INSERT INTO tb_notes (title, text, created_at, author_id) " +
                 "VALUES (?, ?, ?, ?)";
         try (Connection connection = C3P0Pool.getConnection()) {
@@ -34,7 +34,7 @@ public class NotesDao {
                 ps.setString(1, note.getTitle());
                 ps.setString(2, note.getText());
                 ps.setObject(3, note.getCreatedAt());
-                ps.setInt(4, author.getId());
+                ps.setInt(4, note.getAuthor().getId());
                 ps.addBatch();
                 return ps.executeUpdate();
             }
@@ -55,8 +55,8 @@ public class NotesDao {
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
-                    note.setCreatedAt(resultSet.getObject("createdAt", OffsetDateTime.class));
-                    note.setAuthor(resultSet.getObject("id", Author.class));
+                    note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
+                   // note.setAuthor(resultSet.getInt("author_id"));
                     return note;
                 }
             }
@@ -72,7 +72,7 @@ public class NotesDao {
         try (Connection connection = C3P0Pool.getConnection()) {
             List<Note> notes;
             try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
-                ps.setInt(5, author.getId());
+                ps.setInt(1, author.getId());
                 ResultSet resultSet = ps.executeQuery();
                 notes = new ArrayList<>();
                 while (resultSet.next()) {
@@ -80,8 +80,8 @@ public class NotesDao {
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
-                    note.setCreatedAt(resultSet.getObject("createdAt", OffsetDateTime.class));
-                    note.setAuthor(resultSet.getObject("id", Author.class));
+                    note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
+                  //  note.setAuthor(resultSet.getObject("id", Author.class));
                     notes.add(note);
                     return notes;
                 }
@@ -106,8 +106,8 @@ public class NotesDao {
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
-                    note.setCreatedAt(resultSet.getObject("createdAt", OffsetDateTime.class));
-                    note.setAuthor(resultSet.getObject("id", Author.class));
+                    note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
+                   // note.setAuthor(resultSet.getObject("author_id", Author.class));
                     notes.add(note);
                     return notes;
                 }
