@@ -56,7 +56,7 @@ public class NotesDao {
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                   // note.setAuthor(resultSet.getInt("author_id"));
+                    // note.setAuthor(resultSet.getInt("author_id"));
                     return note;
                 }
             }
@@ -70,25 +70,23 @@ public class NotesDao {
         String selectSql = "SELECT *" +
                 " FROM tb_notes WHERE author_id = 2";
         try (Connection connection = C3P0Pool.getConnection()) {
-            List<Note> notes;
             try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
                 ResultSet resultSet = ps.executeQuery();
-                notes = new ArrayList<>();
+                List<Note> notes = new ArrayList<>();
                 while (resultSet.next()) {
                     Note note = new Note();
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                  //  note.setAuthor(resultSet.getObject("id", Author.class));
+                    //  note.setAuthor(resultSet.getObject("id", Author.class));
                     notes.add(note);
-                    return notes;
                 }
+                return notes;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Note> getByIdWithLimitAndOffset() {
@@ -96,25 +94,23 @@ public class NotesDao {
                 "FROM tb_notes " +
                 "LIMIT 2 OFFSET 1";
         try (Connection connection = C3P0Pool.getConnection()) {
-            List<Note> notes;
             try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
                 ResultSet resultSet = ps.executeQuery();
-                notes = new ArrayList<>();
+                List<Note> notes = new ArrayList<>();
                 while (resultSet.next()) {
                     Note note = new Note();
                     note.setId(resultSet.getInt("id"));
                     note.setTitle(resultSet.getString("title"));
                     note.setText(resultSet.getString("text"));
                     note.setCreatedAt(resultSet.getObject("created_at", OffsetDateTime.class));
-                   // note.setAuthor(resultSet.getObject("author_id", Author.class));
+                    // note.setAuthor(resultSet.getObject("author_id", Author.class));
                     notes.add(note);
-                    return notes;
                 }
+                return notes;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 }
 // 1. CHECK на created_at - дата в прошлом

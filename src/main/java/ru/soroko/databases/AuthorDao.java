@@ -90,22 +90,21 @@ public class AuthorDao {
     }
 
     public List<Author> allAuthors() {
-        String selectSql = "SELECT * FROM tb_authors WHERE is_active = true";
-        try (Connection connection = C3P0Pool.getConnection()) {
-            List<Author> authors;
-            try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
-                ps.setBoolean(4, true);
+        String selectSql = "SELECT id, unique_name, registered_at, is_active " +
+                "FROM tb_authors WHERE is_active = true";
+        try (Connection connection = C3P0Pool.getConnection()){
+            try (PreparedStatement ps = connection.prepareStatement(selectSql)){
                 ResultSet resultSet = ps.executeQuery();
-                authors = new ArrayList<>();
+                List<Author> list = new ArrayList<>();
                 while (resultSet.next()) {
                     Author author = new Author();
                     author.setId(resultSet.getInt("id"));
                     author.setUniqueName(resultSet.getString("unique_name"));
                     author.setRegisteredAt(resultSet.getObject("registered_at", LocalDate.class));
                     author.setActive(resultSet.getBoolean("is_active"));
-                    authors.add(author);
+                    list.add(author);
                 }
-                return authors;
+                return list;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -20,7 +20,7 @@ public class Databases {
         authorDao.createTable();
         NotesDao notesDao = new NotesDao();
         notesDao.create();
-        //  notesDao.insert(note);
+        notesDao.insert(note);
         Note getNote = notesDao.getById(5);
         System.out.println(getNote);
         List<Note> notesByAuthorId = notesDao.getByAuthorId(author);
