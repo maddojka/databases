@@ -68,11 +68,10 @@ public class NotesDao {
 
     public List<Note> getByAuthorId(Author author) {
         String selectSql = "SELECT *" +
-                " FROM tb_notes WHERE author_id = ?";
+                " FROM tb_notes WHERE author_id = 2";
         try (Connection connection = C3P0Pool.getConnection()) {
             List<Note> notes;
             try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
-                ps.setInt(1, author.getId());
                 ResultSet resultSet = ps.executeQuery();
                 notes = new ArrayList<>();
                 while (resultSet.next()) {
